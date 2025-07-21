@@ -36,7 +36,7 @@ enum class Orientation(val symbol: Char) {
          * Parses a character into an Orientation.
          */
         fun fromSymbol(symbol: Char): Orientation {
-            return values().find { it.symbol == symbol }
+            return entries.find { it.symbol == symbol }
                 ?: throw IllegalArgumentException("Invalid orientation symbol: $symbol")
         }
     }
