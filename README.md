@@ -44,6 +44,7 @@ The solution is designed with a focus on clean, idiomatic Kotlin code and follow
 ```
 
 ### Running the Application
+The following command takes a file name argument to read from. See /src/main/resources/sample-input.txt for an example file:
 
 ```bash
 ./gradlew run --args="input.txt"
