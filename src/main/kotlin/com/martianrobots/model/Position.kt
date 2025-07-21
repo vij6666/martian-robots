@@ -1,7 +1,5 @@
 package com.martianrobots.model
 
-import com.martianrobots.model.Orientation
-
 /**
  * Represents a position on the grid with x and y coordinates.
  */
