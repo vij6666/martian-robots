@@ -10,9 +10,41 @@ import java.io.File
 class MartianRobots {
 
     /**
+     * Data class to hold validated input data.
+     */
+    private data class ValidatedInput(
+        val grid: Grid,
+        val robotsWithInstructions: List<Pair<Robot, List<Instruction>>>
+    )
+
+    /**
      * Processes the input and returns the output.
      */
     fun process(input: String): String {
+        // Validate input and get validated data
+        val validatedData = validateInput(input)
+        val grid = validatedData.grid
+        val robotsWithInstructions = validatedData.robotsWithInstructions
+
+        val controller = RobotController(grid)
+
+        // Process each robot
+        val results = mutableListOf<Robot>()
+
+        for ((robot, instructions) in robotsWithInstructions) {
+            // Process the instructions
+            val finalRobot = controller.processInstructions(robot, instructions)
+            results.add(finalRobot)
+        }
+
+        // Generate the output
+        return results.joinToString("\n") { it.toString() }
+    }
+
+    /**
+     * Validates the input and returns a ValidatedInput object.
+     */
+    private fun validateInput(input: String): ValidatedInput {
         if (input.trim().isEmpty()) {
             throw IllegalArgumentException("Input cannot be empty")
         }
@@ -46,10 +78,9 @@ class MartianRobots {
         }
 
         val grid = Grid(width, height)
-        val controller = RobotController(grid)
 
         // Process each robot
-        val results = mutableListOf<Robot>()
+        val robotsWithInstructions = mutableListOf<Pair<Robot, List<Instruction>>>()
         var lineIndex = 1
 
         while (lineIndex < lines.size) {
@@ -81,13 +112,10 @@ class MartianRobots {
             val instructionsLine = lines[lineIndex++]
             val instructions = Instruction.parseInstructions(instructionsLine)
 
-            // Process the instructions
-            val finalRobot = controller.processInstructions(robot, instructions)
-            results.add(finalRobot)
+            robotsWithInstructions.add(robot to instructions)
         }
 
-        // Generate the output
-        return results.joinToString("\n") { it.toString() }
+        return ValidatedInput(grid, robotsWithInstructions)
     }
 
     companion object {
