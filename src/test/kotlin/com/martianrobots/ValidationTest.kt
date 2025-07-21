@@ -42,7 +42,7 @@ class ValidationTest {
         val exception = assertThrows(IllegalArgumentException::class.java) {
             martianRobots.process(input)
         }
-        assertTrue(exception.message?.contains("Grid dimensions must be positive") ?: false)
+        assertTrue(exception.message?.contains("Grid dimensions must be between 0 and 50") ?: false)
     }
     
     @Test
@@ -57,7 +57,7 @@ class ValidationTest {
         val exception = assertThrows(IllegalArgumentException::class.java) {
             martianRobots.process(input)
         }
-        assertTrue(exception.message?.contains("Grid dimensions cannot exceed 50") ?: false)
+        assertTrue(exception.message?.contains("Grid dimensions must be between 0 and 50") ?: false)
     }
     
     @Test
@@ -137,7 +137,7 @@ class ValidationTest {
         """.trimIndent()
         
         val martianRobots = MartianRobots()
-        val exception = assertThrows(NumberFormatException::class.java) {
+        assertThrows(NumberFormatException::class.java) {
             martianRobots.process(input)
         }
     }
@@ -151,7 +151,7 @@ class ValidationTest {
         """.trimIndent()
         
         val martianRobots = MartianRobots()
-        val exception = assertThrows(NumberFormatException::class.java) {
+        assertThrows(NumberFormatException::class.java) {
             martianRobots.process(input)
         }
     }
